@@ -12,9 +12,7 @@ To build Creepy, you need :
 
 Open a terminal and type :
 
-```git clone https://github.com/entropy-os/creepy.git
-cd creepy
-make```
+```git clone https://github.com/entropy-os/creepy.git && cd creepy && make```
 
 # :rocket: Help us
 
