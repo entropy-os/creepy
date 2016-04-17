@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:47:48 2016 Benjamin Grange
-** Last update Sun Apr 17 18:25:58 2016 Benjamin Grange
+** Last update Sun Apr 17 19:15:51 2016 Benjamin Grange
 */
 
 #ifndef CREEPY_H_
@@ -27,8 +27,6 @@ int			print_errori(char *err);
 void			*print_errorn(char *err);
 
 /* Free ressources and exit with value ret */
-
 void			cleanup(int ret);
-
 
 #endif /* !CREEPY_H_ */
