@@ -7,6 +7,7 @@ To build Creepy, you need :
 * A linux-base system. Currently, Windows and Mac OS X are not supported.
 * GCC (latest version as possible)
 * Make
+
 # Building Creepy
 
 Open a terminal and type :
@@ -14,3 +15,7 @@ Open a terminal and type :
 ```git clone https://github.com/entropy-os/creepy.git
 cd creepy
 make```
+
+# :rocket: Help us
+
+Fork with us ! :)
