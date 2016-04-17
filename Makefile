@@ -5,7 +5,7 @@
 ## Login   <grange_c@epitech.net>
 ##
 ## Started on  Fri Apr 15 18:28:26 2016 Benjamin Grange
-## Last update Sun Apr 17 18:44:52 2016 Benjamin Grange
+## Last update Sun Apr 17 22:25:43 2016 Benjamin Grange
 ##
 
 NAME		:= creepy
@@ -17,23 +17,30 @@ SOURCE_DIR	:= ./source/
 SRC		:= \
 		main.c \
 
-SRCARGUMENTS	:= \
+SRC_OPERATION	:= \
+		operation/list/operation_list.c \
+		operation/remove/operation_remove.c \
+		operation/sync/operation_sync.c \
+
+SRC_ARGUMENTS	:= \
+		arguments/arguments_needs_root.c \
 		arguments/arguments_parse_operation.c \
 		arguments/arguments_parse.c \
 		arguments/arguments_usage.c \
 		arguments/arguments_version.c \
 
-SRCUTILS	:= \
+SRC_UTILS	:= \
 		utils/utils_cleanup.c \
 		utils/utils_error.c \
 
-SRC		+= $(SRCARGUMENTS) $(SRCUTILS)
 
-CFLAGS		:= -W -Wall -Wextra -Iinclude -g3
+SRC		+= $(SRC_ARGUMENTS) $(SRC_UTILS) $(SRC_OPERATION)
 
 SRC		:= $(addprefix $(SOURCE_DIR),$(SRC))
 
 OBJ		:= $(SRC:.c=.o)
+
+CFLAGS		:= -W -Wall -Wextra -Iinclude -g3
 
 RM		:= rm -rf
 

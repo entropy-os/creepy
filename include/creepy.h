@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:47:48 2016 Benjamin Grange
-** Last update Sun Apr 17 19:15:51 2016 Benjamin Grange
+** Last update Sun Apr 17 22:28:38 2016 Benjamin Grange
 */
 
 #ifndef CREEPY_H_
@@ -20,13 +20,32 @@
 # define CREEPY_VERSION 0.1
 # define CREEPY_VERSION_STR MACRO_TO_STR(CREEPY_VERSION)
 
-/* Error handling functions */
+typedef			enum
+{
+  OP_DEFAULT = 1,
+  OP_SYNC,
+  OP_REMOVE,
+  OP_LIST,
+}			t_operation;
+
+typedef struct		s_params
+{
+  t_operation		op;
+  bool			help : 1;
+  bool			version : 1;
+  bool			verbose : 1;
+}			t_params;
+
+typedef struct
+{
+  t_params		params;
+}			t_creepy;
+
+/* Utils functions */
 
 void			print_error(char *err);
 int			print_errori(char *err);
 void			*print_errorn(char *err);
-
-/* Free ressources and exit with value ret */
-void			cleanup(int ret);
+void			cleanup(t_creepy *, int ret);
 
 #endif /* !CREEPY_H_ */
