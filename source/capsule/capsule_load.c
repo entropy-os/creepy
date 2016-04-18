@@ -44,7 +44,7 @@ t_capsule		*capsule_load(const char *name)
     }
   if (!(cps = malloc(sizeof(t_capsule))))
     {
-      perror("Malloc");
+      perror("malloc");
       exit(EXIT_FAILURE);
     }
   cps->file_name = name;

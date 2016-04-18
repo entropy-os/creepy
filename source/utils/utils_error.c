@@ -13,7 +13,7 @@
 
 void			print_error(const char *err)
 {
-  dprintf(2, "Error: %s\n", err);
+  fprintf(stderr, "Error: %s\n", err);
 }
 
 int			print_errori(const char *err)
