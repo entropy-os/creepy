@@ -43,9 +43,9 @@ typedef struct
 
 /* Utils functions */
 
-void			print_error(char *err);
-int			print_errori(char *err);
-void			*print_errorn(char *err);
+void			print_error(const char *err);
+int			print_errori(const char *err);
+void			*print_errorn(const char *err);
 void			cleanup(t_creepy *, int ret);
 
 #endif /* !CREEPY_H_ */
