@@ -9,19 +9,20 @@
 */
 
 #include <stdio.h>
+#include "creepy.h"
 
-void			print_error(char *err)
+void			print_error(const char *err)
 {
   fprintf(stderr, "Error: %s\n", err);
 }
 
-int			print_errori(char *err)
+int			print_errori(const char *err)
 {
   print_error(err);
   return (1);
 }
 
-void			*print_errorn(char *err)
+void			*print_errorn(const char *err)
 {
   print_error(err);
   return (NULL);

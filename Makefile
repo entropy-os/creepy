@@ -40,7 +40,7 @@ SRC		:= $(addprefix $(SOURCE_DIR),$(SRC))
 
 OBJ		:= $(SRC:.c=.o)
 
-CFLAGS		:= -W -Wall -Wextra -Iinclude -g3
+CFLAGS		:= -W -Wall -Wextra -Iinclude -std=c99 -g3
 
 RM		:= rm -rf
 
