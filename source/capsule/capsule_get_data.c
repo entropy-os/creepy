@@ -5,22 +5,10 @@
 ** Login   <melis_m@epitech.eu>
 **
 ** Started on  Fri Apr 15 19:01:47 2016 Matteo Melis
-** Last update Tue Apr 19 14:45:17 2016 Matteo Melis
+** Last update Tue Apr 19 15:06:07 2016 Matteo Melis
 */
 
 #include "capsule.h"
-
-static char	*skip_spaces_newline(const char *s)
-{
-  char		*tmp;
-
-  tmp = (char *)s;
-//  while (*tmp && (isspace(*tmp) || *tmp == '\n'))
-
-  while (*tmp && *tmp != '"')
-    tmp++;
-  return (tmp);
-}
 
 static char	*check_no_quotes(const char *data, int index)
 {
@@ -53,6 +41,18 @@ static int	check_if_last(const char *s, const char *data)
   return (0);
 }
 
+static char	*get_next(char *data)
+{
+  while (!isalpha(*data) && *data != '"')
+    data++;
+  data += (int)(strchr(data, '"') - data);
+  data += *data == '"';
+  while (!isalpha(*data) && *data != '"')
+    data++;
+  data += *data == '"';
+  return (data);
+}
+
 static char	*get_str(const char *s, int index)
 {
   int		i;
@@ -60,8 +60,6 @@ static char	*get_str(const char *s, int index)
   const char 	*data;
 
   data = s;
-   //while (*data && (*data == '\n' || isspace(*data)))
-
   while (isspace(*data) && *data != '"')
      data++;
   if (!(ret = check_no_quotes(data, index)))
@@ -70,17 +68,10 @@ static char	*get_str(const char *s, int index)
       i = 0;
       while (i != index)
 	{
-	  while (!isalpha(*data) && *data != '"')
-	    data++;
-	  data += (int)(strchr(data, '"') - data);
-	  data += *data == '"';
-	  while (!isalpha(*data) && *data != '"')
-	    data++;
-	  data += *data == '"';
-//	  printf("oui : '%.30s'\n", data);
-	  i += 1;
+	  data = get_next((char*)data);
 	  if (check_if_last(s, data))
 	    return (NULL);
+	  i += 1;
 	}
       if (!(ret = strndup(data, (int)(strchrnul(data, '"') - data))))
 	exit(3);
@@ -98,8 +89,13 @@ static char	*get_start(t_capsule *cps,
     exit(3);
   sprintf(data_eq, "%s=", data);
   tmp = cps->buffer;
-  while (*tmp && strncmp(tmp, data_eq, strlen(data)))
-    tmp++;
+  while (*tmp)
+    {
+      if (!strncmp(tmp, data_eq, strlen(data))
+	 && (*(tmp - 1) == '\n'))
+	break;
+      tmp++;
+    }
   free(data_eq);
   if (!*tmp)
     return (NULL);
