@@ -5,12 +5,12 @@
 ** Login   <melis_m@epitech.eu>
 **
 ** Started on  Fri Apr 15 18:08:03 2016 Matteo Melis
-** Last update Sat Apr 16 00:41:48 2016 Matteo Melis
+** Last update Tue Apr 19 14:15:27 2016 Matteo Melis
 */
 
 #include "capsule.h"
 
-static char		*read_file(t_capsule *cps)
+static char		*file_read(t_capsule *cps)
 {
   struct stat		sb;
   char			*buffer;
@@ -18,7 +18,7 @@ static char		*read_file(t_capsule *cps)
   if ((lstat(cps->file_name, &sb)) == -1)
     {
       perror("lstat");
-      exit(1);
+      return (NULL);
     }
   if (!(buffer = malloc(sizeof(char) * (sb.st_size + 1))))
     exit(3);
@@ -26,7 +26,7 @@ static char		*read_file(t_capsule *cps)
       != (size_t)sb.st_size)
     {
       perror("read error");
-      exit(1);
+      return (NULL);
     }
   buffer[sb.st_size - 1] = 0;
   return (buffer);
@@ -40,15 +40,16 @@ t_capsule		*capsule_load(const char *name)
   if (!(fp = fopen(name, "r")))
     {
       perror("fopen");
-      exit(EXIT_FAILURE);
+      return (NULL);
     }
   if (!(cps = malloc(sizeof(t_capsule))))
     {
-      perror("Malloc");
-      exit(EXIT_FAILURE);
+      perror("malloc");
+      return (NULL);
     }
   cps->file_name = name;
   cps->fp = fp;
-  cps->buffer = read_file(cps);
+  if (!(cps->buffer = file_read(cps)))
+    return (NULL);
   return (cps);
 }

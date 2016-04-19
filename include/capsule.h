@@ -5,12 +5,13 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:49:05 2016 Benjamin Grange
-** Last update Fri Apr 15 23:54:48 2016 Matteo Melis
+** Last update Tue Apr 19 14:31:01 2016 Matteo Melis
 */
 
 #ifndef CAPSULE_H_
 # define CAPSULE_H_
 
+# define _GNU_SOURCE 1
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -34,5 +35,7 @@ void			capsule_del(t_capsule *capsule);
 char			*capsule_get_data(t_capsule *, const char *, int);
 
 /* Core capsule functions */
+
+// UI
 
 #endif /* !CAPSULE_H_ */
