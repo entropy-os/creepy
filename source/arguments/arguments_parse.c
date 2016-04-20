@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 18:20:12 2016 Benjamin Grange
-** Last update Mon Apr 18 17:55:49 2016 Benjamin Grange
+** Last update Wed Apr 20 04:28:34 2016 Benjamin Grange
 */
 
 #include <unistd.h>
@@ -15,9 +15,10 @@
 int			arguments_parse(t_creepy *creepy, t_params *params,
 					int argc, char *argv[])
 {
+  int			result;
   int			opt;
   int			option_index = 0;
-  const char		*optstring = "SRLVh";
+  const char		*optstring = "SRLVhr";
 
   params->op = OP_DEFAULT;
   static const struct option opts[] =
@@ -27,10 +28,12 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
       { "list", no_argument, 0, 'L'},
       { "version", no_argument, 0, 'V'},
       { "help", no_argument, 0, 'h'},
+
+      { "refresh", no_argument, 0, FLAG_REFRESH},
       { 0, 0, 0, 0}
     };
 
-  // Parse operations
+  // Parse operations (Like the -S in -Sr)
   while ((opt = getopt_long(argc, argv, optstring, opts, &option_index)) != (-1))
     {
       if (opt == '?')
@@ -49,5 +52,39 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
       arguments_version(creepy);
       cleanup(creepy, 0);
     }
+
+  //Parse operations parameters. (Like the -r in -Sr)
+  optind = 1;
+  while ((opt = getopt_long(argc, argv, optstring, opts, &option_index)) != (-1))
+    {
+      if (opt == '?')
+	return (1);
+      else if (opt == 0 || arguments_parse_operation(params, opt, true) == 0)
+	continue;
+      switch (creepy->params.op)
+	{
+	  case OP_SYNC:
+	    result = arguments_parse_sync(&creepy->params, opt);
+	    break;
+	  default:
+	    result = 1;
+	    break;
+	}
+      if (result != 0) //The flag exists, but it's not in the actual operation.
+	{
+	  if(opt < FLAG_MINIMAL)
+	    fprintf(stderr, "invalid option '-%c' "
+		    "(use -h or --help for help)\n", opt);
+	  else
+	    fprintf(stderr, "invalid option '--%s' "
+		    "(use -h or --help for help)\n",
+		    opts[option_index].name);
+	  return (result);
+	}
+    }
+  creepy->params.targets = (const char **)argv + optind;
+  /*
+  ** TODO: Add flag conflicts verifications
+  */
   return (0);
 }

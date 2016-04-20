@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:59:59 2016 Benjamin Grange
-** Last update Mon Apr 18 17:54:20 2016 Benjamin Grange
+** Last update Wed Apr 20 04:08:07 2016 Benjamin Grange
 */
 
 #ifndef ARGUMENTS_H_
@@ -17,6 +17,7 @@
 
 int		arguments_parse(t_creepy *, t_params *, int, char *[]);
 bool		arguments_parse_operation(t_params *, int, bool);
+int		arguments_parse_sync(t_params *params, int opt);
 
 /* Utils functions */
 

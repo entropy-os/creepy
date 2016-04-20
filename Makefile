@@ -5,7 +5,7 @@
 ## Login   <grange_c@epitech.net>
 ##
 ## Started on  Fri Apr 15 18:28:26 2016 Benjamin Grange
-## Last update Sun Apr 17 22:25:43 2016 Benjamin Grange
+## Last update Wed Apr 20 04:24:17 2016 Benjamin Grange
 ##
 
 NAME		:= creepy
@@ -25,6 +25,7 @@ SRC_OPERATION	:= \
 SRC_ARGUMENTS	:= \
 		arguments/arguments_needs_root.c \
 		arguments/arguments_parse_operation.c \
+		arguments/arguments_parse_sync.c \
 		arguments/arguments_parse.c \
 		arguments/arguments_usage.c \
 		arguments/arguments_version.c \

@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:47:48 2016 Benjamin Grange
-** Last update Sun Apr 17 22:28:38 2016 Benjamin Grange
+** Last update Wed Apr 20 04:19:29 2016 Benjamin Grange
 */
 
 #ifndef CREEPY_H_
@@ -22,6 +22,12 @@
 
 typedef			enum
 {
+  FLAG_MINIMAL		= 1000,
+  FLAG_REFRESH
+}			t_flags;
+
+typedef			enum
+{
   OP_DEFAULT = 1,
   OP_SYNC,
   OP_REMOVE,
@@ -31,9 +37,11 @@ typedef			enum
 typedef struct		s_params
 {
   t_operation		op;
+  const char		**targets;
   bool			help : 1;
-  bool			version : 1;
-  bool			verbose : 1;
+  bool			version : 1;// -h
+  bool			verbose : 1;// -v
+  bool			refresh : 1;// -Sr
 }			t_params;
 
 typedef struct
