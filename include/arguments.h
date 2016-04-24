@@ -15,14 +15,16 @@
 
 /* Arguments parsing functions */
 
+/*
+** Returns 0 on success, -1 on error
+*/
 int		arguments_parse(t_creepy *, t_params *, int, char *[]);
 bool		arguments_parse_operation(t_params *, int, bool);
 int		arguments_parse_sync(t_params *params, int opt);
 
 /* Utils functions */
 
-void		arguments_print_usage(t_creepy *creepy,
-                                      t_operation op,
+void		arguments_print_usage(t_operation op,
                                       const char *program_name);
 
 void		arguments_version(t_creepy *);

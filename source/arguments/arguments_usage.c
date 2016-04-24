@@ -39,8 +39,7 @@ static void     usage_list(const char *program_name)
   printf("usage: %s {-L --list} [options] <package(s)>\n", program_name);
 }
 
-void            arguments_print_usage(t_creepy *creepy,
-                                      t_operation op,
+void            arguments_print_usage(t_operation op,
                                       const char *program_name)
 {
   switch (op)
@@ -54,5 +53,4 @@ void            arguments_print_usage(t_creepy *creepy,
     default:
       usage_general(program_name);
     }
-  cleanup(creepy, 0);
 }

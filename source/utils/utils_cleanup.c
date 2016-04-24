@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include "creepy.h"
 
-void			cleanup(t_creepy *creepy, int ret)
+void			cleanup(t_creepy *creepy)
 {
   t_repository		*repo;
 
@@ -22,5 +22,4 @@ void			cleanup(t_creepy *creepy, int ret)
       creepy->repo = repo;
     }
   curl_global_cleanup();
-  exit(ret);
 }

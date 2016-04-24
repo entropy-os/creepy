@@ -13,6 +13,9 @@
 
 # include "creepy.h"
 
-bool			repository_create_main_dir(t_repository *rep);
+/*
+** Returns 0 on success, -1 on error.
+*/
+int			repository_create_main_dir(t_repository *rep);
 
 #endif /* !REPOSITORY_H_ */

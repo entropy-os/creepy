@@ -12,7 +12,7 @@
 
 void			arguments_version(t_creepy *creepy)
 {
+  (void)creepy;
   printf("Creepy v%s\n", CREEPY_VERSION_STR);
   printf("Copyright (C) 2016 - Creepy and Entropy development team\n");
-  cleanup(creepy, 0);
 }

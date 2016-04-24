@@ -44,35 +44,40 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
     }
 
   if (params->op == 0)
-    return (print_errori("Only one operation may be used at a time\n"));
+    {
+      print_error("Only one operation may be used at a time");
+      return (-1);
+    }
   if (params->help)
     {
-      arguments_print_usage(creepy, params->op, argv[0]);
-      cleanup(creepy, 0);
+      arguments_print_usage(params->op, argv[0]);
+      return (0);
     }
   if (params->version)
     {
       arguments_version(creepy);
-      cleanup(creepy, 0);
+      return (0);
     }
 
   //Parse operations parameters. (Like the -r in -Sr)
   optind = 1;
-  while ((opt = getopt_long(argc, argv, optstring, opts, &option_index)) != (-1))
+  while ((opt = getopt_long(argc, argv, optstring, opts, &option_index)) != -1)
     {
       if (opt == '?')
 	return (1);
       else if (opt == 0 || arguments_parse_operation(params, opt, true) == 0)
 	continue;
+
       switch (creepy->params.op)
 	{
-	  case OP_SYNC:
-	    result = arguments_parse_sync(&creepy->params, opt);
-	    break;
-	  default:
-	    result = 1;
-	    break;
+        case OP_SYNC:
+          result = arguments_parse_sync(&creepy->params, opt);
+          break;
+        default:
+          result = 1;
+          break;
 	}
+
       if (result != 0) //The flag exists, but it's not in the actual operation.
 	{
 	  if(opt < FLAG_MINIMAL)

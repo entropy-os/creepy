@@ -22,7 +22,10 @@ typedef struct		s_ftp_file
   bool			print_once;
 }			t_ftp_file;
 
-bool			download_file(t_creepy *,
+/*
+** Returns -1 on error, 0 on success.
+*/
+int			download_file(t_creepy *,
 				      const char *u,
 				      const char *p,
 				      const char *print_name);

@@ -10,33 +10,24 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "creepy.h"
 
-void			print_error(const char *err, ...)
+void            print_error(const char *error_message, ...)
 {
-  va_list		va;
+  va_list       va;
 
-  va_start(va, err);
-  vfprintf(stderr, err, va);
+  va_start(va, error_message);
+  vfprintf(stderr, error_message, va);
   va_end(va);
 }
 
-int			print_errori(const char *err, ...)
+void            die(const char *error_message, ...)
 {
-  va_list		va;
+  va_list       va;
 
-  va_start(va, err);
-  vfprintf(stderr, err, va);
+  va_start(va, error_message);
+  vfprintf(stderr, error_message, va);
   va_end(va);
-  return (1);
-}
-
-void			*print_errorn(const char *err, ...)
-{
-  va_list		va;
-
-  va_start(va, err);
-  vfprintf(stderr, err, va);
-  va_end(va);
-  return (NULL);
+  exit(1);
 }
