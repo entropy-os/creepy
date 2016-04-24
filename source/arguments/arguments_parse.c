@@ -23,13 +23,14 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
   params->op = OP_DEFAULT;
   static const struct option opts[] =
     {
-      { "sync", no_argument, 0, 'S'},
-      { "remove", no_argument, 0, 'R'},
-      { "list", no_argument, 0, 'L'},
-      { "version", no_argument, 0, 'V'},
-      { "help", no_argument, 0, 'h'},
+      { "sync",         no_argument, 0, 'S'},
+      { "remove",       no_argument, 0, 'R'},
+      { "list",         no_argument, 0, 'L'},
+      { "version",      no_argument, 0, 'V'},
+      { "help",         no_argument, 0, 'h'},
 
-      { "refresh", no_argument, 0, FLAG_REFRESH},
+      { "refresh",      no_argument, 0, FLAG_REFRESH},
+
       { 0, 0, 0, 0}
     };
 
@@ -44,11 +45,13 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
 
   if (params->op == 0)
     return (print_errori("Only one operation may be used at a time"));
-  if (params->help) {
+  if (params->help)
+    {
       arguments_usage(creepy, params->op, argv[0]);
       cleanup(creepy, 0);
     }
-  if (params->version) {
+  if (params->version)
+    {
       arguments_version(creepy);
       cleanup(creepy, 0);
     }

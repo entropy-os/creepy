@@ -13,6 +13,6 @@
 int			operation_list(t_creepy *creepy)
 {
   (void)creepy;
-  printf("In operation_list() !\n");
+  printf("In operation_list()!\n");
   return (0);
 }
