@@ -5,12 +5,13 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 02:24:45 2016 Benjamin Grange
-** Last update Sun Apr 24 02:31:36 2016 Benjamin Grange
+** Last update Sun Apr 24 16:04:02 2016 Benjamin Grange
 */
 
 #define _GNU_SOURCE //FIXME
 #include <sys/stat.h>
 #include <string.h>
+#include <stdlib.h>
 #include "repository.h"
 
 int			repository_create_main_dir(t_repository *repo)
@@ -23,8 +24,10 @@ int			repository_create_main_dir(t_repository *repo)
     die("asprint() failure");
   if (stat(path, &st) == -1 && mkdir(path, 0755) != 0)
     {
+      free(path);
       print_error("Can't create directory \"%s\"\n", path);
       return -1;
     }
+  free(path);
   return 0;
 }

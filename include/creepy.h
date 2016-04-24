@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:47:48 2016 Benjamin Grange
-** Last update Sun Apr 24 15:50:01 2016 Benjamin Grange
+** Last update Sun Apr 24 15:53:31 2016 Benjamin Grange
 */
 
 #ifndef CREEPY_H_
@@ -98,6 +98,6 @@ void			cleanup(t_creepy *creepy);
 */
 void    die(const char *error_message, ...) __attribute__ ((noreturn));
 
-void			verbose(t_creepy *, const char *fmt, ...);
+void			verbose(const t_creepy *, const char *fmt, ...);
 
 #endif /* !CREEPY_H_ */

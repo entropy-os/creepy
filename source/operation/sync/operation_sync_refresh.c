@@ -5,12 +5,13 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 01:18:38 2016 Benjamin Grange
-** Last update Sun Apr 24 15:41:04 2016 Benjamin Grange
+** Last update Sun Apr 24 16:03:16 2016 Benjamin Grange
 */
 
 #define _GNU_SOURCE //FIXME
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "operation_sync.h"
 #include "repository.h"
 #include "download.h"
@@ -41,13 +42,14 @@ int			operation_sync_refresh(t_creepy *creepy)
 
       dest_path = get_packagelist_filename(repo);
 
-      for (int i = 0; i < 3; i++)
+      for (int i = 0; i < 3; i++) //FIXME : For debug
       if (download_file(creepy, repo->url, dest_path, repo->name))
 	{
 	  print_error("Failed while trying to refresh "
                       "repository \"%s\"\n", repo->name);
           return (-1);
 	}
+      free(dest_path);
       repo = repo->next;
     }
   return (0);

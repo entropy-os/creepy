@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 17 18:24:32 2016 Benjamin Grange
-** Last update Sun Apr 17 22:09:11 2016 Benjamin Grange
+** Last update Sun Apr 24 16:02:05 2016 Benjamin Grange
 */
 
 #include <stdlib.h>
@@ -13,8 +13,13 @@
 
 void			cleanup(t_creepy *creepy)
 {
-  /*
-  ** TODO : Free ressources.
-  */
-  (void)creepy;
+  t_repository		*repo;
+
+  while (creepy->repo)
+    {
+      repo = creepy->repo->next;
+      free(creepy->repo);
+      creepy->repo = repo;
+    }
+  curl_global_cleanup();
 }
