@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 17 18:06:26 2016 Benjamin Grange
-** Last update Sun Apr 24 02:14:55 2016 Benjamin Grange
+** Last update Sun Apr 24 17:38:17 2016 Benjamin Grange
 */
 
 #include <stdarg.h>
@@ -20,14 +20,4 @@ void            print_error(const char *error_message, ...)
   va_start(va, error_message);
   vfprintf(stderr, error_message, va);
   va_end(va);
-}
-
-void            die(const char *error_message, ...)
-{
-  va_list       va;
-
-  va_start(va, error_message);
-  vfprintf(stderr, error_message, va);
-  va_end(va);
-  exit(1);
 }

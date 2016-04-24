@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 02:51:34 2016 Benjamin Grange
-** Last update Sun Apr 24 15:58:01 2016 Benjamin Grange
+** Last update Sun Apr 24 17:53:22 2016 Benjamin Grange
 */
 
 #include <sys/ioctl.h>
@@ -34,7 +34,7 @@ static int		download_progressbar(void *p,
       int printname_size = printf("%s", ftp->print_name);
       printf("%*c", win.ws_col - 72 - printname_size, '[');
       for (i = 0; i < 64; i++)
-	(i < cur) ? printf(">") : printf("_");
+	putchar(i < cur ? '>' : '_');
       printf("] %3i%% \r", (int)(percent * 100));
       fflush(stdout);
       ftp->print_once = true;

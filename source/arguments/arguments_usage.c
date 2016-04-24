@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 17 18:26:42 2016 Benjamin Grange
-** Last update Sun Apr 24 15:45:16 2016 Benjamin Grange
+** Last update Sun Apr 24 18:07:39 2016 Benjamin Grange
 */
 
 #include "arguments.h"
@@ -46,11 +46,15 @@ void            arguments_print_usage(t_operation op,
     {
     case OP_SYNC:
       usage_sync(program_name);
+      break;
     case OP_REMOVE:
       usage_remove(program_name);
+      break;
     case OP_LIST:
       usage_list(program_name);
+      break;
     default:
       usage_general(program_name);
+      break;
     }
 }

@@ -5,11 +5,12 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 18:20:12 2016 Benjamin Grange
-** Last update Sun Apr 24 15:46:19 2016 Benjamin Grange
+** Last update Sun Apr 24 18:12:43 2016 Benjamin Grange
 */
 
 #include <unistd.h>
 #include <getopt.h>
+#include <stdlib.h>
 #include "arguments.h"
 
 int			arguments_parse(t_creepy *creepy, t_params *params,
@@ -45,18 +46,20 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
 
   if (params->op == 0)
     {
-      print_error("Only one operation may be used at a time");
+      print_error("Only one operation may be used at a time\n");
       return (-1);
     }
   if (params->help)
     {
       arguments_print_usage(params->op, argv[0]);
-      return (0);
+      cleanup(creepy);
+      exit(EXIT_SUCCESS);
     }
   if (params->version)
     {
       arguments_version(creepy);
-      return (0);
+      cleanup(creepy);
+      exit(EXIT_SUCCESS);
     }
 
   //Parse operations parameters. (Like the -r in -Sr)

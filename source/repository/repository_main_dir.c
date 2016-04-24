@@ -5,10 +5,9 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 02:24:45 2016 Benjamin Grange
-** Last update Sun Apr 24 16:04:02 2016 Benjamin Grange
+** Last update Sun Apr 24 18:34:44 2016 Benjamin Grange
 */
 
-#define _GNU_SOURCE //FIXME
 #include <sys/stat.h>
 #include <string.h>
 #include <stdlib.h>
@@ -19,9 +18,7 @@ int			repository_create_main_dir(t_repository *repo)
   struct stat		st;
   char			*path;
 
-  asprintf(&path, CREEPY_PATH"/%s", repo->name);
-  if (!path)
-    die("asprint() failure");
+  path = creepy_asprintf(CREEPY_PATH"/%s", repo->name);
   if (stat(path, &st) == -1 && mkdir(path, 0755) != 0)
     {
       free(path);

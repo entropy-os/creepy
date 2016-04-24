@@ -5,22 +5,18 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:47:48 2016 Benjamin Grange
-** Last update Sun Apr 24 15:53:31 2016 Benjamin Grange
+** Last update Sun Apr 24 18:34:09 2016 Benjamin Grange
 */
 
 #ifndef CREEPY_H_
 # define CREEPY_H_
-
-# define _GNU_SOURCE //TODO FIXME fix this by adding a personnal asprintf implementation
-# include <stdio.h>
-# undef _GNU_SOURCE //FIXME
 
 # include <stdbool.h>
 # include <curl/curl.h>
 
 # define STR(x) #x
 # define XSTR(macro) STR(macro)
-
+# define FORMAT(x, y) __attribute__ ((format (printf, x, y)))
 # define CREEPY_VERSION 0.1
 # define CREEPY_VERSION_STR XSTR(CREEPY_VERSION)
 # define CREEPY_PATH "/etc/creepy"
@@ -42,8 +38,8 @@ typedef enum		e_operation
 
 typedef struct		s_repository
 {
-  const char            *name;
-  const char            *url;
+  char            	*name;
+  char            	*url;
   struct s_repository	*next;
 }			t_repository;
 
@@ -56,11 +52,6 @@ typedef struct		s_params
   bool			verbose : 1;// -v
   bool			refresh : 1;// -Sr
 }			t_params;
-
-typedef struct		s_config
-{
-  bool			progressbar : 1;
-}			t_config;
 
 typedef struct
 {
@@ -82,7 +73,7 @@ int			init(t_creepy *creepy);
 /*
 ** Prints an error message.
 */
-void			print_error(const char *err, ...);
+void			print_error(const char *err, ...) FORMAT(1, 2);
 
 /*
 ** Frees the ressources allocated in the given t_creepy.
@@ -98,6 +89,16 @@ void			cleanup(t_creepy *creepy);
 */
 void    die(const char *error_message, ...) __attribute__ ((noreturn));
 
-void			verbose(const t_creepy *, const char *fmt, ...);
+/*
+** Prints the fmt message using printf-like arguments only if the verbose
+** argument has been choosen.
+*/
+void			verbose(const t_creepy *, const char *fmt, ...) FORMAT(2, 3);
+
+/*
+** Usefull string-management functions
+*/
+char			*creepy_strdup(const char *str);
+char			*creepy_asprintf(const char *fmt, ...) FORMAT(1, 2);
 
 #endif /* !CREEPY_H_ */
