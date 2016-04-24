@@ -15,15 +15,14 @@
 #include "repository.h"
 #include "download.h"
 
-static char		*get_packagelist_filename(t_creepy *creepy,
-						  t_repository *repo)
+static char		*get_packagelist_filename(t_repository *repo)
 {
   char			*path;
 
   asprintf(&path, CREEPY_PATH"/%s/package_list", repo->name);
   if (!path)
     {
-      die("Asprintf failed (Not enough memory ?)\n");
+      die("asprintf() failed (Not enough memory ?)\n");
     }
   return (path);
 }
@@ -39,7 +38,7 @@ int			operation_sync_refresh(t_creepy *creepy)
       if (repository_create_main_dir(repo))
 	return (-1);
 
-      dest_path = get_packagelist_filename(creepy, repo);
+      dest_path = get_packagelist_filename(repo);
 
       for (int i = 0; i < 3; i++)
       if (download_file(creepy, repo->url, dest_path, repo->name))
