@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 18:20:12 2016 Benjamin Grange
-** Last update Wed Apr 20 04:28:34 2016 Benjamin Grange
+** Last update Sun Apr 24 15:09:27 2016 Matteo Melis
 */
 
 #include <unistd.h>
@@ -47,7 +47,7 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
     return (print_errori("Only one operation may be used at a time"));
   if (params->help)
     {
-      arguments_usage(creepy, params->op, argv[0]);
+      arguments_print_usage(creepy, params->op, argv[0]);
       cleanup(creepy, 0);
     }
   if (params->version)
