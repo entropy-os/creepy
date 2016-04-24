@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 02:51:34 2016 Benjamin Grange
-** Last update Sun Apr 24 04:46:21 2016 Benjamin Grange
+** Last update Sun Apr 24 04:50:22 2016 Benjamin Grange
 */
 
 #include <sys/ioctl.h>
@@ -81,8 +81,6 @@ bool			download_file(t_creepy *creepy,
   ftpfile.print_name = print_name;
   ftpfile.filename = path;
   ftpfile.stream = NULL;
-  ftpfile.lastruntime = 0;
-  ftpfile.curl = creepy->curl;
   ftpfile.print_once = false;
 
   creepy->curl = curl_easy_init();

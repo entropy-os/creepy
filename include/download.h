@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 02:52:29 2016 Benjamin Grange
-** Last update Sun Apr 24 04:37:14 2016 Benjamin Grange
+** Last update Sun Apr 24 04:50:13 2016 Benjamin Grange
 */
 
 #ifndef DOWNLOAD_H_
@@ -14,16 +14,11 @@
 # include <curl/curl.h>
 # include "creepy.h"
 
-# define STOP_DOWNLOAD_AFTER_THIS_MANY_BYTES         6000
-# define MINIMAL_PROGRESS_FUNCTIONALITY_INTERVAL     3
-
 typedef struct		s_ftp_file
 {
   const char		*print_name;
   const char		*filename;
   FILE			*stream;
-  CURL			*curl;
-  double		lastruntime;
   bool			print_once;
 }			t_ftp_file;
 
