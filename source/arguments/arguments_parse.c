@@ -45,7 +45,7 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
   if (params->op == 0)
     return (print_errori("Only one operation may be used at a time"));
   if (params->help) {
-      arguments_usage(creepy, params->op, argv[0]);
+      arguments_print_usage(creepy, params->op, argv[0]);
       cleanup(creepy, 0);
     }
   if (params->version) {

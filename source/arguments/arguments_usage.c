@@ -10,9 +10,9 @@
 
 #include "arguments.h"
 
-void			arguments_usage_general(char *argv0)
+static void     usage_general(const char *program_name)
 {
-  printf("usage: %s <operation> [...]\n", argv0);
+  printf("usage: %s <operation> [...]\n", program_name);
   printf("operations:\n");
   printf("  {-h --help}\n");
   printf("  {-V --version}\n");
@@ -21,32 +21,35 @@ void			arguments_usage_general(char *argv0)
   printf("  {-L --list}\n");
 }
 
-void			arguments_usage_sync(char *argv0)
+static void     usage_sync(const char *program_name)
 {
-  printf("usage: %s {-S --sync} [options] <package(s)>\n", argv0);
+  printf("usage: %s {-S --sync} [options] <package(s)>\n", program_name);
 }
 
-void			arguments_usage_remove(char *argv0)
+static void     usage_remove(const char *program_name)
 {
-  printf("usage: %s {-R --remove} [options] <package(s)>\n", argv0);
+  printf("usage: %s {-R --remove} [options] <package(s)>\n", program_name);
 }
 
-void			arguments_usage_list(char *argv0)
+static void     usage_list(const char *program_name)
 {
-  printf("usage: %s {-L --list} [options] <package(s)>\n", argv0);
+  printf("usage: %s {-L --list} [options] <package(s)>\n", program_name);
 }
 
-void			arguments_usage(t_creepy *creepy,
-					t_operation op,
-					char *argv0)
+void            arguments_print_usage(t_creepy *creepy,
+                                      t_operation op,
+                                      const char *program_name)
 {
-  if (op == OP_SYNC)
-    arguments_usage_sync(argv0);
-  else if (op == OP_REMOVE)
-    arguments_usage_remove(argv0);
-  else if (op == OP_LIST)
-    arguments_usage_list(argv0);
-  else
-    arguments_usage_general(argv0);
+  switch (op)
+    {
+    case OP_SYNC:
+      usage_sync(program_name);
+    case OP_REMOVE:
+      usage_remove(program_name);
+    case OP_LIST:
+      usage_list(program_name);
+    default:
+      usage_general(program_name);
+    }
   cleanup(creepy, 0);
 }
