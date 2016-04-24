@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 01:18:38 2016 Benjamin Grange
-** Last update Sun Apr 24 04:39:10 2016 Benjamin Grange
+** Last update Sun Apr 24 15:41:04 2016 Benjamin Grange
 */
 
 #define _GNU_SOURCE //FIXME
@@ -22,7 +22,7 @@ static char		*get_packagelist_filename(t_repository *repo)
   asprintf(&path, CREEPY_PATH"/%s/package_list", repo->name);
   if (!path)
     {
-      die("asprintf() failed (Not enough memory ?)\n");
+      die("asprintf() failed (Not enough memory?)\n");
     }
   return (path);
 }
@@ -33,6 +33,7 @@ int			operation_sync_refresh(t_creepy *creepy)
   char			*dest_path;
 
   repo = creepy->repo;
+  verbose(creepy, "Refreshing repositories...");
   while (repo)
     {
       if (repository_create_main_dir(repo))

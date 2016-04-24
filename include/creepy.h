@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:47:48 2016 Benjamin Grange
-** Last update Sun Apr 24 03:31:43 2016 Benjamin Grange
+** Last update Sun Apr 24 15:50:01 2016 Benjamin Grange
 */
 
 #ifndef CREEPY_H_
@@ -28,7 +28,8 @@
 typedef			enum
 {
   FLAG_MINIMAL		= 1000,
-  FLAG_REFRESH
+  FLAG_REFRESH,
+  FLAG_VERBOSE
 }			t_flags;
 
 typedef enum		e_operation
@@ -55,6 +56,11 @@ typedef struct		s_params
   bool			verbose : 1;// -v
   bool			refresh : 1;// -Sr
 }			t_params;
+
+typedef struct		s_config
+{
+  bool			progressbar : 1;
+}			t_config;
 
 typedef struct
 {
@@ -91,5 +97,7 @@ void			cleanup(t_creepy *creepy);
 ** Use only in case of fatal error.
 */
 void    die(const char *error_message, ...) __attribute__ ((noreturn));
+
+void			verbose(t_creepy *, const char *fmt, ...);
 
 #endif /* !CREEPY_H_ */

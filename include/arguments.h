@@ -24,7 +24,9 @@ int		arguments_parse_sync(t_params *params, int opt);
 
 /* Utils functions */
 
-void		arguments_usage(t_operation, char *);
+void		arguments_print_usage(t_operation op,
+                                      const char *program_name);
+
 void		arguments_version(t_creepy *);
 bool		arguments_needs_root(t_params *params);
 

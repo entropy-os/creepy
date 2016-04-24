@@ -13,6 +13,6 @@
 int			operation_remove(t_creepy *creepy)
 {
   (void)creepy;
-  printf("In operation_remove() !\n");
+  printf("In operation_remove()!\n");
   return (0);
 }
