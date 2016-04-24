@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 18:20:12 2016 Benjamin Grange
-** Last update Sun Apr 24 15:44:16 2016 Benjamin Grange
+** Last update Sun Apr 24 15:46:19 2016 Benjamin Grange
 */
 
 #include <unistd.h>
@@ -23,13 +23,13 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
   params->op = OP_DEFAULT;
   static const struct option opts[] =
     {
-      { "sync", no_argument, 0, 'S'},
-      { "remove", no_argument, 0, 'R'},
-      { "list", no_argument, 0, 'L'},
-      { "version", no_argument, 0, 'V'},
-      { "help", no_argument, 0, 'h'},
+      { "sync",         no_argument, 0, 'S'},
+      { "remove",       no_argument, 0, 'R'},
+      { "list",         no_argument, 0, 'L'},
+      { "version",      no_argument, 0, 'V'},
+      { "help",         no_argument, 0, 'h'},
 
-      { "refresh",	no_argument, 0, FLAG_REFRESH},
+      { "refresh",      no_argument, 0, FLAG_REFRESH},
       { "verbose",	no_argument, 0, FLAG_VERBOSE},
       { 0, 0, 0, 0}
     };
@@ -45,11 +45,13 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
 
   if (params->op == 0)
     return (print_errori("Only one operation may be used at a time\n"));
-  if (params->help) {
-      arguments_usage(creepy, params->op, argv[0]);
+  if (params->help)
+    {
+      arguments_print_usage(creepy, params->op, argv[0]);
       cleanup(creepy, 0);
     }
-  if (params->version) {
+  if (params->version)
+    {
       arguments_version(creepy);
       cleanup(creepy, 0);
     }

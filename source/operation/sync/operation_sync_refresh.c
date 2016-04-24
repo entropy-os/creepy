@@ -23,7 +23,7 @@ static char		*get_packagelist_filename(t_creepy *creepy,
   asprintf(&path, CREEPY_PATH"/%s/package_list", repo->name);
   if (!path)
     {
-      print_error("Asprintf failed (Not enough memory ?)\n");
+      print_error("Asprintf failed (Not enough memory?)\n");
       cleanup(creepy, 1);
     }
   return (path);

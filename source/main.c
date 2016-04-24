@@ -22,16 +22,16 @@ int			main(int argc, char *argv[])
   int			myuid = getuid();
 
   if (init(&creepy))
-    cleanup(&creepy, EXIT_FAILURE); //This calls exit()
+    cleanup(&creepy, EXIT_FAILURE); // This calls exit()
 
-  //TODO : Add auto-loading of repositories instead of this debug-list.
+  // TODO: Add auto-loading of repositories instead of this debug-list.
   t_repository *repo = calloc(sizeof(t_repository), 1);
   if (repo == NULL)
     cleanup(&creepy, EXIT_FAILURE);
   repo->name = "Creepy_Official_Repository";
   repo->url = "http://127.0.0.1:8000";//"http://download.thinkbroadband.com/5MB.zip";
   creepy.repo = repo;
-  //ENDTODO
+  // ENDTODO
 
   ret = arguments_parse(&creepy, &creepy.params, argc, argv);
   if (ret != 0)

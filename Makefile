@@ -18,7 +18,7 @@ INCDIR		:= ./include/
 #
 # Compilation & link options
 #
-CC		:= gcc
+CC		:= cc
 CFLAGS		:= -W -Wall -Wextra -pedantic -I $(INCDIR) -std=c99 -g3
 LDLIBS		:= -lcurl
 
