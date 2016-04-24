@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:47:48 2016 Benjamin Grange
-** Last update Sun Apr 24 03:31:43 2016 Benjamin Grange
+** Last update Sun Apr 24 15:38:08 2016 Benjamin Grange
 */
 
 #ifndef CREEPY_H_
@@ -28,7 +28,8 @@
 typedef			enum
 {
   FLAG_MINIMAL		= 1000,
-  FLAG_REFRESH
+  FLAG_REFRESH,
+  FLAG_VERBOSE
 }			t_flags;
 
 typedef enum		e_operation
@@ -56,6 +57,11 @@ typedef struct		s_params
   bool			refresh : 1;// -Sr
 }			t_params;
 
+typedef struct		s_config
+{
+  bool			progressbar : 1;
+}			t_config;
+
 typedef struct
 {
   CURL			*curl;
@@ -71,5 +77,6 @@ void			print_error(const char *err, ...);
 int			print_errori(const char *err, ...);
 void			*print_errorn(const char *err, ...);
 void			cleanup(t_creepy *, int ret);
+void			verbose(t_creepy *, const char *fmt);
 
 #endif /* !CREEPY_H_ */

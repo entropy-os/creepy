@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 18:20:12 2016 Benjamin Grange
-** Last update Wed Apr 20 04:28:34 2016 Benjamin Grange
+** Last update Sun Apr 24 15:44:16 2016 Benjamin Grange
 */
 
 #include <unistd.h>
@@ -18,7 +18,7 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
   int			result;
   int			opt;
   int			option_index = 0;
-  const char		*optstring = "SRLVhr";
+  const char		*optstring = "SRLVhrv";
 
   params->op = OP_DEFAULT;
   static const struct option opts[] =
@@ -29,7 +29,8 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
       { "version", no_argument, 0, 'V'},
       { "help", no_argument, 0, 'h'},
 
-      { "refresh", no_argument, 0, FLAG_REFRESH},
+      { "refresh",	no_argument, 0, FLAG_REFRESH},
+      { "verbose",	no_argument, 0, FLAG_VERBOSE},
       { 0, 0, 0, 0}
     };
 
@@ -43,7 +44,7 @@ int			arguments_parse(t_creepy *creepy, t_params *params,
     }
 
   if (params->op == 0)
-    return (print_errori("Only one operation may be used at a time"));
+    return (print_errori("Only one operation may be used at a time\n"));
   if (params->help) {
       arguments_usage(creepy, params->op, argv[0]);
       cleanup(creepy, 0);

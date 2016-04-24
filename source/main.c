@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:54:27 2016 Benjamin Grange
-** Last update Sun Apr 24 04:39:03 2016 Benjamin Grange
+** Last update Sun Apr 24 15:09:47 2016 Benjamin Grange
 */
 
 #include <stdlib.h>
@@ -29,7 +29,7 @@ int			main(int argc, char *argv[])
   if (repo == NULL)
     cleanup(&creepy, EXIT_FAILURE);
   repo->name = "Creepy_Official_Repository";
-  repo->url = "http://download.thinkbroadband.com/5MB.zip";
+  repo->url = "http://127.0.0.1:8000";//"http://download.thinkbroadband.com/5MB.zip";
   creepy.repo = repo;
   //ENDTODO
 

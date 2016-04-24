@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 17 18:26:42 2016 Benjamin Grange
-** Last update Sun Apr 17 22:26:12 2016 Benjamin Grange
+** Last update Sun Apr 24 15:43:37 2016 Benjamin Grange
 */
 
 #include "arguments.h"
@@ -24,6 +24,9 @@ void			arguments_usage_general(char *argv0)
 void			arguments_usage_sync(char *argv0)
 {
   printf("usage: %s {-S --sync} [options] <package(s)>\n", argv0);
+  printf("options:\n");
+  printf("  -r, --refresh\t\tdownload the package databases from servers\n");
+  printf("  -v, --verbose\t\tbe verbose\n");
 }
 
 void			arguments_usage_remove(char *argv0)

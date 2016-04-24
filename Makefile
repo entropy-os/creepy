@@ -5,7 +5,7 @@
 ## Login   <grange_c@epitech.net>
 ##
 ## Started on  Fri Apr 15 18:28:26 2016 Benjamin Grange
-## Last update Sun Apr 24 03:27:57 2016 Benjamin Grange
+## Last update Sun Apr 24 15:38:46 2016 Benjamin Grange
 ##
 
 #
@@ -61,7 +61,7 @@ DOWNLOAD	:= \
 SRC_UTILS	:= \
 		utils/utils_cleanup.c \
 		utils/utils_error.c \
-
+		utils/utils_verbose.c \
 
 SRC		+= $(SRC_ARGUMENTS) $(SRC_UTILS) $(SRC_OPERATION)
 SRC		+= $(DOWNLOAD) $(REPOSITORY)
