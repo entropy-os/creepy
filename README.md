@@ -5,7 +5,7 @@ Creepy is a packet manager for Entropy, a mobile operating system.
 
 To build Creepy, you need :
 * A linux-base system. Currently, Windows and Mac OS X are not supported.
-* libcurl
+* The [libcurl](https://curl.haxx.se/libcurl/) library
 * GCC
 * Make
 
