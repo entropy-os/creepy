@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 02:51:34 2016 Benjamin Grange
-** Last update Sun Apr 24 04:50:22 2016 Benjamin Grange
+** Last update Sun Apr 24 15:58:01 2016 Benjamin Grange
 */
 
 #include <sys/ioctl.h>
@@ -22,13 +22,13 @@ static int		download_progressbar(void *p,
   int			cur;
   int			i;
 
-  (void)ultotal;(void)ulnow;
+  (void)ultotal;(void)ulnow;// We are not uploading datas
   ftp = (t_ftp_file *)p;
-  if (dltotal > 0)
+  if (dltotal > 0.0)
     {
       percent = dlnow / (double)dltotal;
       ioctl(STDOUT_FILENO, TIOCGWINSZ, &win); //Get terminal size
-      cur = (int)((64) * percent);
+      cur = (int)(64 * percent);
 
       //Printing progress bar
       int printname_size = printf("%s", ftp->print_name);
