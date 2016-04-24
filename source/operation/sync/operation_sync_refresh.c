@@ -23,8 +23,7 @@ static char		*get_packagelist_filename(t_creepy *creepy,
   asprintf(&path, CREEPY_PATH"/%s/package_list", repo->name);
   if (!path)
     {
-      print_error("Asprintf failed (Not enough memory ?)\n");
-      cleanup(creepy, 1);
+      die("Asprintf failed (Not enough memory ?)\n");
     }
   return (path);
 }
@@ -38,17 +37,18 @@ bool			operation_sync_refresh(t_creepy *creepy)
   while (repo)
     {
       if (repository_create_main_dir(repo))
-	return (true);
+	return (-1);
 
       dest_path = get_packagelist_filename(creepy, repo);
 
       for (int i = 0; i < 3; i++)
       if (download_file(creepy, repo->url, dest_path, repo->name))
 	{
-	  return (print_errori("Failed while trying to refresh "
-			       "repository \"%s\"\n", repo->name));
+	  print_error("Failed while trying to refresh "
+                      "repository \"%s\"\n", repo->name);
+          return (-1);
 	}
       repo = repo->next;
     }
-  return (false);
+  return (0);
 }

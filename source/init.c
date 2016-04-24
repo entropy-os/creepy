@@ -12,17 +12,20 @@
 #include <string.h>
 #include "creepy.h"
 
-bool			init(t_creepy *creepy)
+int			init(t_creepy *creepy)
 {
   struct stat		st;
 
   memset(creepy, 0, sizeof(t_creepy));
 
-  //Main creepy directory
+  // Main creepy directory
   if (stat(CREEPY_PATH, &st) == -1 && mkdir(CREEPY_PATH, 0755) != 0)
-    return (print_errori("Can't create creepy main directory \""CREEPY_PATH"\"\n"));
+    {
+      print_error("Can't create creepy main directory \"" CREEPY_PATH "\"\n");
+      return (-1);
+    }
 
-  //Curl initialisation
+  // Curl initialisation
   curl_global_init(CURL_GLOBAL_ALL);
 
   return (false);

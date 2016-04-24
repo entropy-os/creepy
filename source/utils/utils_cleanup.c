@@ -11,11 +11,10 @@
 #include <stdlib.h>
 #include "creepy.h"
 
-void			cleanup(t_creepy *creepy, int ret)
+void			cleanup(t_creepy *creepy)
 {
   /*
   ** TODO : Free ressources.
   */
   (void)creepy;
-  exit(ret);
 }

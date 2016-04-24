@@ -13,15 +13,18 @@
 #include <string.h>
 #include "repository.h"
 
-bool			repository_create_main_dir(t_repository *repo)
+int			repository_create_main_dir(t_repository *repo)
 {
   struct stat		st;
   char			*path;
 
   asprintf(&path, CREEPY_PATH"/%s", repo->name);
   if (!path)
-    return (true);
+    die("asprint() failure");
   if (stat(path, &st) == -1 && mkdir(path, 0755) != 0)
-    return (print_errori("Can't create directory \"%s\"\n", path));
-  return (false);
+    {
+      print_error("Can't create directory \"%s\"\n", path);
+      return -1;
+    }
+  return 0;
 }

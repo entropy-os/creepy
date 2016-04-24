@@ -41,8 +41,8 @@ typedef enum		e_operation
 
 typedef struct		s_repository
 {
-  char			*name;
-  char			*url;
+  const char            *name;
+  const char            *url;
   struct s_repository	*next;
 }			t_repository;
 
@@ -63,13 +63,33 @@ typedef struct
   t_repository		*repo;
 }			t_creepy;
 
-bool			init(t_creepy *);
+/*
+** Returns -1 on error, 0 on success.
+**
+** A description of the error is printed on the error output.
+** On error, the t_creepy must not be invalidated with cleanup().
+*/
+int			init(t_creepy *creepy);
 
 /* Utils functions */
 
+/*
+** Prints an error message.
+*/
 void			print_error(const char *err, ...);
-int			print_errori(const char *err, ...);
-void			*print_errorn(const char *err, ...);
-void			cleanup(t_creepy *, int ret);
+
+/*
+** Frees the ressources allocated in the given t_creepy.
+**
+** Invalidate the t_creepy.
+*/
+void			cleanup(t_creepy *creepy);
+
+/*
+** Prints the error message and exits with a non-zero status.
+**
+** Use only in case of fatal error.
+*/
+void    die(const char *error_message, ...) __attribute__ ((noreturn));
 
 #endif /* !CREEPY_H_ */

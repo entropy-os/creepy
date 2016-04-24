@@ -36,8 +36,7 @@ void			arguments_usage_list(char *argv0)
   printf("usage: %s {-L --list} [options] <package(s)>\n", argv0);
 }
 
-void			arguments_usage(t_creepy *creepy,
-					t_operation op,
+void			arguments_usage(t_operation op,
 					char *argv0)
 {
   if (op == OP_SYNC)
@@ -48,5 +47,4 @@ void			arguments_usage(t_creepy *creepy,
     arguments_usage_list(argv0);
   else
     arguments_usage_general(argv0);
-  cleanup(creepy, 0);
 }
