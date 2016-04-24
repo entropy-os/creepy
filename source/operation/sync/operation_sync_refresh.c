@@ -28,7 +28,7 @@ static char		*get_packagelist_filename(t_creepy *creepy,
   return (path);
 }
 
-bool			operation_sync_refresh(t_creepy *creepy)
+int			operation_sync_refresh(t_creepy *creepy)
 {
   t_repository		*repo;
   char			*dest_path;

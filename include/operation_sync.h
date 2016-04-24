@@ -13,6 +13,9 @@
 
 # include "operation.h"
 
-bool		operation_sync_refresh(t_creepy *);
+/*
+** Returns 0 on success, -1 on error
+*/
+int		operation_sync_refresh(t_creepy *);
 
 #endif /* !OPERATION_SYNC_H_ */

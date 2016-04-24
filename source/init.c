@@ -28,5 +28,5 @@ int			init(t_creepy *creepy)
   // Curl initialisation
   curl_global_init(CURL_GLOBAL_ALL);
 
-  return (false);
+  return (0);
 }
