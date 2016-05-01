@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 01:18:38 2016 Benjamin Grange
-** Last update Sun Apr 24 18:34:36 2016 Benjamin Grange
+** Last update Sun May  1 04:04:07 2016 Benjamin Grange
 */
 
 #include <sys/wait.h>
@@ -18,6 +18,7 @@
 int			operation_sync_refresh(t_creepy *creepy)
 {
   t_repository		*repo;
+  t_dl_group		*group;
   char			*dest_path;
 
   repo = creepy->repo;
@@ -29,12 +30,14 @@ int			operation_sync_refresh(t_creepy *creepy)
 
       dest_path = creepy_asprintf(CREEPY_PATH"/%s/package_list", repo->name);
 
-      if (download_file(creepy, repo->url, dest_path, repo->name))
+      group = download_group_create();
+      for (int i = 0; i < 10; i++) //FIXME Added this for debug
 	{
-	  print_error("Failed while trying to refresh "
-                      "repository \"%s\"\n", repo->name);
-          return (-1);
+	  char *test = creepy_asprintf("%s-%i", repo->name, rand());
+	  download_group_add_file(group, creepy_strdup(repo->url), test, creepy_strdup(dest_path));
 	}
+      download_group(group);
+      download_group_destroy(group);
       free(dest_path);
       repo = repo->next;
     }

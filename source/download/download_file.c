@@ -5,52 +5,93 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 02:51:34 2016 Benjamin Grange
-** Last update Sun Apr 24 17:53:22 2016 Benjamin Grange
+** Last update Sun May  1 04:03:26 2016 Benjamin Grange
 */
 
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include <string.h>
 #include "download.h"
 
-static int		download_progressbar(void *p,
-					     curl_off_t dltotal, curl_off_t dlnow,
-					     curl_off_t ultotal, curl_off_t ulnow)
+/* Draw the progressbar and the percentage (Eg: [>>>>----]  50%)*/
+static void		download_print_progressbar(t_dl_group *group,
+						   double ratio, int proglen)
 {
-  t_ftp_file		*ftp;
-  double		percent;
-  struct winsize	win;
-  int			cur;
+  /* Len : 1 ('[') + 1 (']') + 5 (" 100% ")*/
+  int			barlen = ((proglen > 8) ? proglen - 8 : 0);
+  double		download_speed;
   int			i;
 
-  (void)ultotal;(void)ulnow;// We are not uploading datas
-  ftp = (t_ftp_file *)p;
-  if (dltotal > 0.0)
+  download_speed = 0;
+  if (barlen >= 50 && ratio > 0.01
+      && curl_easy_getinfo(group->actual->curl,
+			   CURLINFO_SPEED_DOWNLOAD, &download_speed) == CURLE_OK
+      && download_speed > 0)
     {
-      percent = dlnow / (double)dltotal;
-      ioctl(STDOUT_FILENO, TIOCGWINSZ, &win); //Get terminal size
-      cur = (int)(64 * percent);
+      const char	*speed_unit;
 
-      //Printing progress bar
-      int printname_size = printf("%s", ftp->print_name);
-      printf("%*c", win.ws_col - 72 - printname_size, '[');
-      for (i = 0; i < 64; i++)
-	putchar(i < cur ? '>' : '_');
-      printf("] %3i%% \r", (int)(percent * 100));
-      fflush(stdout);
-      ftp->print_once = true;
+      download_speed = humanize_size(download_speed, &speed_unit);
+      if (download_speed < 9.995)
+	printf("%4.2f %c/s ", download_speed, speed_unit[0]);
+      else if (download_speed < 99.95)
+	printf("%4.1f %c/s ", download_speed, speed_unit[0]);
+      else
+	printf("%4.f %c/s ", download_speed, speed_unit[0]);
+      barlen -= 9;
     }
+  if (barlen > 0)
+    {
+      putchar('[');
+      i = barlen;
+      while (i > 0)
+	{
+	  putchar((i > barlen - ratio * barlen) ? '>' : '-');
+	  --i;
+	}
+      putchar(']');
+    }
+  if (proglen >= 6)
+    printf(" %3i%% \r", (int)(ratio * 100.0));
+}
+
+static int		download_callback(void *p,
+					  curl_off_t dltotal, curl_off_t dlnow,
+					  curl_off_t ultotal, curl_off_t ulnow)
+{
+  t_dl_group		*group;
+  unsigned char		cols;
+  int			infolen;
+  int			digits;
+
+  (void)ultotal;(void)ulnow;// We are not uploading datas
+  group = (t_dl_group *)p;
+
+  cols = getcols();
+  infolen = cols * 6 / 10;
+  if (infolen < 50)
+    infolen = 50;
+  digits = number_digits(group->nb_file);
+  printf("(%*zu/%*zu) %s%-*s", digits, group->actual->id, digits, group->nb_file,
+	 group->actual->print_name,
+	 infolen - 4 - 2 * digits - (int)strlen(group->actual->print_name), "");
+  if (dltotal > 0.0)
+    download_print_progressbar(group, dlnow / (double)dltotal, cols - infolen);
+  else
+    download_print_progressbar(group, 0, cols - infolen);
+  putchar('\r');
+  fflush(stdout);
   return (0);
 }
 
-static int		download_progressbar_old(void *p,
-						 double dltotal, double dlnow,
-						 double ultotal, double ulnow)
+static int		download_callback_old(void *p,
+					      double dltotal, double dlnow,
+					      double ultotal, double ulnow)
 {
-  return (download_progressbar(p,
-			       (curl_off_t)dltotal,
-			       (curl_off_t)dlnow,
-			       (curl_off_t)ultotal,
-			       (curl_off_t)ulnow));
+  return (download_callback(p,
+			    (curl_off_t)dltotal,
+			    (curl_off_t)dlnow,
+			    (curl_off_t)ultotal,
+			    (curl_off_t)ulnow));
 }
 
 static size_t		download_write(void *buffer,
@@ -58,61 +99,43 @@ static size_t		download_write(void *buffer,
 				       size_t nmemb,
 				       void *stream)
 {
-  t_ftp_file		*out;
+  t_dl_file		*file;
 
-  out = (t_ftp_file *)stream;
-  if(out && !out->stream)
+  file = (t_dl_file *)stream;
+  if (file && !file->stream)
     {
-      out->stream = fopen(out->filename, "wb");
-      if(!out->stream)
+      file->stream = fopen(file->filename, "wb");
+      if(!file->stream)
 	return (-1);
     }
-  return (fwrite(buffer, size, nmemb, out->stream));
+  return (fwrite(buffer, size, nmemb, file->stream));
 }
 
-int			download_file(t_creepy *creepy,
-				      const char *url,
-				      const char *path,
-				      const char *print_name)
+int			download_file(t_dl_group *group, t_dl_file *file)
 {
-  t_ftp_file		ftpfile;
   CURLcode		res;
 
-  ftpfile.print_name = print_name;
-  ftpfile.filename = path;
-  ftpfile.stream = NULL;
-  ftpfile.print_once = false;
-
-  creepy->curl = curl_easy_init();
-  if (!creepy->curl)
+  file->curl = curl_easy_init();
+  if (!file->curl)
     die("curl_easy_init() failed");
 
-  curl_easy_setopt(creepy->curl, CURLOPT_URL, url);
-  curl_easy_setopt(creepy->curl, CURLOPT_WRITEFUNCTION, download_write);
-  curl_easy_setopt(creepy->curl, CURLOPT_WRITEDATA, &ftpfile);
+  curl_easy_setopt(file->curl, CURLOPT_URL, file->url);
+  curl_easy_setopt(file->curl, CURLOPT_WRITEFUNCTION, download_write);
+  curl_easy_setopt(file->curl, CURLOPT_WRITEDATA, file);
 
   //Progress bar
-  curl_easy_setopt(creepy->curl, CURLOPT_NOPROGRESS, 0L);
-  curl_easy_setopt(creepy->curl, CURLOPT_PROGRESSFUNCTION, download_progressbar_old);
-  curl_easy_setopt(creepy->curl, CURLOPT_PROGRESSDATA, &ftpfile);
-#if LIBCURL_VERSION_NUM >= 0x072000 //Old libcurl version compatibility
-  curl_easy_setopt(creepy->curl, CURLOPT_XFERINFOFUNCTION, download_progressbar);
-  curl_easy_setopt(creepy->curl, CURLOPT_XFERINFODATA, &ftpfile);
+  curl_easy_setopt(file->curl, CURLOPT_NOPROGRESS, 0L);
+  curl_easy_setopt(file->curl, CURLOPT_PROGRESSFUNCTION, download_callback_old);
+  curl_easy_setopt(file->curl, CURLOPT_PROGRESSDATA, group);
+#if LIBCURL_VERSION_NUM >= 0x072000 //Recent libcurl version compatibility
+  curl_easy_setopt(file->curl, CURLOPT_XFERINFOFUNCTION, download_callback);
+  curl_easy_setopt(file->curl, CURLOPT_XFERINFODATA, group);
 #endif
 
-  res = curl_easy_perform(creepy->curl);
-  curl_easy_cleanup(creepy->curl);
-
-  if (res == CURLE_OK)
-    download_progressbar(&ftpfile, 100, 100, 100, 100); //To print the 100% bar
-  else if (!ftpfile.print_once)
-    download_progressbar(&ftpfile, 100, 0, 100, 0); //To print the 0% bar when download didn't started
-  if (ftpfile.print_once)
-    printf("\n");
-
-  if (ftpfile.stream)
-    fclose(ftpfile.stream);
+  res = curl_easy_perform(file->curl);
+  curl_easy_cleanup(file->curl);
+  printf("\n");
+  if (file->stream)
+    fclose(file->stream);
   return (res == CURLE_OK ? 0 : -1);
-
-  return (0);
 }

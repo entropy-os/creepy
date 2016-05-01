@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 02:24:45 2016 Benjamin Grange
-** Last update Sun Apr 24 18:34:44 2016 Benjamin Grange
+** Last update Wed Apr 27 21:57:28 2016 Benjamin Grange
 */
 
 #include <sys/stat.h>
@@ -23,8 +23,8 @@ int			repository_create_main_dir(t_repository *repo)
     {
       free(path);
       print_error("Can't create directory \"%s\"\n", path);
-      return -1;
+      return (-1);
     }
   free(path);
-  return 0;
+  return (0);
 }

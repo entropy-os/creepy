@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:54:27 2016 Benjamin Grange
-** Last update Sun Apr 24 18:32:10 2016 Benjamin Grange
+** Last update Sun May  1 03:54:22 2016 Benjamin Grange
 */
 
 #include <stdlib.h>
@@ -47,7 +47,7 @@ static t_repository     *create_repo(void)
   if (repo == NULL)
     return (NULL);
   repo->name = creepy_strdup("Creepy_Official_Repository");
-  repo->url = creepy_strdup("http://127.0.0.1:8000");
+  repo->url = creepy_strdup("http://download.thinkbroadband.com/5MB.zip");
   repo->next = NULL;
   if (repo->name == NULL || repo->url == NULL)
     return (NULL);

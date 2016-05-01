@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Fri Apr 15 17:47:48 2016 Benjamin Grange
-** Last update Sun Apr 24 18:34:09 2016 Benjamin Grange
+** Last update Sun May  1 03:59:12 2016 Benjamin Grange
 */
 
 #ifndef CREEPY_H_
@@ -55,7 +55,6 @@ typedef struct		s_params
 
 typedef struct
 {
-  CURL			*curl;
   t_params		params;
   t_repository		*repo;
 }			t_creepy;
@@ -87,7 +86,7 @@ void			cleanup(t_creepy *creepy);
 **
 ** Use only in case of fatal error.
 */
-void    die(const char *error_message, ...) __attribute__ ((noreturn));
+void    		die(const char *err, ...) __attribute__ ((noreturn));
 
 /*
 ** Prints the fmt message using printf-like arguments only if the verbose
@@ -96,9 +95,16 @@ void    die(const char *error_message, ...) __attribute__ ((noreturn));
 void			verbose(const t_creepy *, const char *fmt, ...) FORMAT(2, 3);
 
 /*
+** Return the number of column in the terminal
+*/
+unsigned short		getcols(void);
+
+/*
 ** Usefull string-management functions
 */
 char			*creepy_strdup(const char *str);
 char			*creepy_asprintf(const char *fmt, ...) FORMAT(1, 2);
+double			humanize_size(double bytes, const char **label);
+int			number_digits(size_t i);
 
 #endif /* !CREEPY_H_ */
