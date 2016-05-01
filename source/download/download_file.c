@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 02:51:34 2016 Benjamin Grange
-** Last update Sun May  1 04:03:26 2016 Benjamin Grange
+** Last update Sun May  1 04:07:11 2016 Benjamin Grange
 */
 
 #include <sys/ioctl.h>
@@ -17,7 +17,7 @@
 static void		download_print_progressbar(t_dl_group *group,
 						   double ratio, int proglen)
 {
-  /* Len : 1 ('[') + 1 (']') + 5 (" 100% ")*/
+  /* Len : 1 ('[') + 1 (']') + 6 (" 100% ")*/
   int			barlen = ((proglen > 8) ? proglen - 8 : 0);
   double		download_speed;
   int			i;

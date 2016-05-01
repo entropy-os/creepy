@@ -5,7 +5,7 @@
 ** Login   <grange_c@epitech.net>
 **
 ** Started on  Sun Apr 24 01:18:38 2016 Benjamin Grange
-** Last update Sun May  1 04:04:07 2016 Benjamin Grange
+** Last update Sun May  1 04:09:21 2016 Benjamin Grange
 */
 
 #include <sys/wait.h>
@@ -19,7 +19,6 @@ int			operation_sync_refresh(t_creepy *creepy)
 {
   t_repository		*repo;
   t_dl_group		*group;
-  char			*dest_path;
 
   repo = creepy->repo;
   verbose(creepy, "Refreshing repositories...");
@@ -28,17 +27,16 @@ int			operation_sync_refresh(t_creepy *creepy)
       if (repository_create_main_dir(repo))
 	return (-1);
 
-      dest_path = creepy_asprintf(CREEPY_PATH"/%s/package_list", repo->name);
-
       group = download_group_create();
       for (int i = 0; i < 10; i++) //FIXME Added this for debug
 	{
 	  char *test = creepy_asprintf("%s-%i", repo->name, rand());
-	  download_group_add_file(group, creepy_strdup(repo->url), test, creepy_strdup(dest_path));
+	  download_group_add_file(group,
+				  creepy_strdup(repo->url), test,
+				  creepy_asprintf(CREEPY_PATH"/%s/package_list", repo->name));
 	}
       download_group(group);
       download_group_destroy(group);
-      free(dest_path);
       repo = repo->next;
     }
   verbose(creepy, "Repositories are now up to date.");
